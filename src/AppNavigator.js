@@ -64,12 +64,12 @@ function HomeTabNav() {
       <HomeTabs.Screen
         name="HomeTab"
         component={HomeScreen}
-        options={{tabBarLabel: 'SCAN TAG'}}
+        options={{tabBarLabel: '读标签'}}
       />
-      <HomeTabs.Screen
+      {/* <HomeTabs.Screen
         name="NdefTypeListTab"
         component={NdefTypeListScreen}
-        options={{title: 'WRITE NDEF'}}
+        options={{title: '写标签'}}
       />
       <HomeTabs.Screen
         name="ToolKitTab"
@@ -80,7 +80,7 @@ function HomeTabNav() {
         name="MyRecordsTab"
         component={SavedRecordScreen}
         options={{title: 'MY RECORDS'}}
-      />
+      /> */}
     </HomeTabs.Navigator>
   );
 }
@@ -109,7 +109,7 @@ function Main(props) {
       }}>
       <MainStack.Screen
         name="TagDetail"
-        options={{title: 'TAG DETAIL'}}
+        options={{title: '标签详情'}}
         component={TagDetailScreen}
       />
       <MainStack.Screen

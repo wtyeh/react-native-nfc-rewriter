@@ -203,7 +203,7 @@ function CustomTransceiveModal(props) {
             </Button>
 
             <Button onPress={doCancel} style={{flex: 1}}>
-              CANCEL
+              取消
             </Button>
           </View>
         </Animated.View>

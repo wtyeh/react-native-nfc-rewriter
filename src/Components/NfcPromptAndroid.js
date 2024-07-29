@@ -70,7 +70,7 @@ function NfcPromptAndroid(props) {
           </View>
 
           <Button mode="contained" onPress={cancelNfcScan}>
-            CANCEL
+          取消
           </Button>
         </Animated.View>
 

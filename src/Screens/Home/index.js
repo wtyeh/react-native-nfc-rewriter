@@ -105,7 +105,7 @@ function HomeScreen(props) {
           onBackgroundTag(bgTag);
         } else {
           const link = await Linking.getInitialURL();
-          console.warn('DEEP LINK', link);
+          // console.warn('DEEP LINK', link);
           if (link) {
             onDeepLink(link, true);
           }
@@ -167,7 +167,7 @@ function HomeScreen(props) {
             }
           }}
           style={{width}}>
-          SCAN NFC TAG
+          点击扫描标签
         </Button>
       </View>
     );
@@ -182,15 +182,14 @@ function HomeScreen(props) {
           width,
         }}>
         <Text style={{textAlign: 'center', marginBottom: 10}}>
-          Your NFC is not enabled. Please first enable it and hit CHECK AGAIN
-          button
+          您的 NFC 未启用。请先启用并点击"重新检测"按钮
         </Text>
 
         <Button
           mode="contained"
           onPress={() => NfcProxy.goToNfcSetting()}
           style={{marginBottom: 10}}>
-          GO TO NFC SETTINGS
+          打开NFC设置
         </Button>
 
         <Button
@@ -198,7 +197,7 @@ function HomeScreen(props) {
           onPress={async () => {
             setEnabled(await NfcProxy.isEnabled());
           }}>
-          CHECK AGAIN
+          重新检测
         </Button>
       </View>
     );
@@ -227,7 +226,7 @@ function HomeScreen(props) {
               textAlign: 'center',
               color: '#666',
             }}>
-            Open Source NFC Reader/Writer App Built On Top Of React Native
+            网道NFC
           </Text>
           <TouchableOpacity
             onPress={() => Linking.openURL('mailto:nfctogo@gmail.com')}
@@ -237,20 +236,20 @@ function HomeScreen(props) {
               alignItems: 'center',
               justifyContent: 'center',
             }}>
-            <Icon name="email" size={18} color={'#888'} />
+            {/* <Icon name="email" size={18} color={'#888'} />
             <Text style={{marginLeft: 6, color: '#888'}}>
               Contact us for any feedback or idea!
-            </Text>
+            </Text> */}
           </TouchableOpacity>
         </View>
 
-        <IconButton
+        {/* <IconButton
           icon={() => <Icon name="cog" size={32} />}
           style={styles.settingIcon}
           onPress={() => {
             navigation.navigate('Settings');
           }}
-        />
+        /> */}
 
         {enabled ? renderNfcButtons() : renderNfcNotEnabled()}
       </View>

@@ -1,6 +1,7 @@
 import React from 'react';
-import {View, Text, Alert, TouchableOpacity, Linking} from 'react-native';
-import {Ndef} from 'react-native-nfc-manager';
+import { View, Text, Alert, TouchableOpacity, Linking, StyleSheet, FlatList } from 'react-native';
+import { Ndef } from 'react-native-nfc-manager';
+import { parseNFCData } from '../Utils/mockedTagData';
 
 const TNF_MAP = {
   EMPTY: 0x0,
@@ -44,21 +45,21 @@ function rtdValueToName(value) {
 
 class NdefMessage extends React.Component {
   render() {
-    const {ndef} = this.props;
+    const { ndef } = this.props;
     const tnfName = tnfValueToName(ndef.tnf);
     const rtdName = rtdValueToName(ndef.type);
 
     return (
       <View>
-        {tnfName && <Text>{`TNF: ${tnfName}`}</Text>}
-        {rtdName && <Text>{`RTD: ${rtdName}`}</Text>}
+        {/* {tnfName && <Text>{`TNF: ${tnfName}`}</Text>}
+        {rtdName && <Text>{`RTD: ${rtdName}`}</Text>} */}
 
-        {this._renderPayload({ndef, rtdName})}
+        {this._renderPayload({ ndef, rtdName })}
       </View>
     );
   }
 
-  _renderPayload = ({ndef, rtdName}) => {
+  _renderPayload = ({ ndef, rtdName }) => {
     if (ndef.tnf === Ndef.TNF_WELL_KNOWN) {
       if (rtdName === 'URI') {
         return <RtdUriPayload ndef={ndef} />;
@@ -81,21 +82,69 @@ class NdefMessage extends React.Component {
 
 class RtdTextPayload extends React.Component {
   render() {
-    let {ndef} = this.props;
+    let { ndef } = this.props;
     let text = Ndef.text.decodePayload(ndef.payload);
-    return <Text style={{fontSize: 18}}>{text}</Text>;
+    return <Text style={{ fontSize: 18 }}>{text}</Text>;
   }
 }
 
 class RtdUriPayload extends React.Component {
   render() {
-    let {ndef} = this.props;
+    let { ndef } = this.props;
     let uri = Ndef.uri.decodePayload(ndef.payload);
+    const renderItem = ({ item }) => (
+      <View style={styles.pairContainer}>
+        <View style={styles.keyColumn}>
+          <Text style={styles.keyText}>{item[0]}</Text>
+        </View>
+        <View style={styles.valueColumn}>
+          <Text style={styles.valueText}>{item[1]}</Text>
+        </View>
+      </View>
+    );
+    
+    const styles = StyleSheet.create({
+      container: {
+        flex: 1,
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+      },
+      image: {
+        width: 250,
+        height: 250,
+        backgroundColor: 'transparent',
+      },
+      pairContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginBottom: 8,
+      },
+      keyColumn: {
+        flexBasis: 120,
+        justifyContent: 'flex-start',
+        marginRight: 8,
+      },
+      keyText: {
+        fontSize: 16,
+        fontWeight: 'bold',
+      },
+      valueColumn: {
+        flexBasis: 120,
+        justifyContent: 'flex-start',
+      },
+      valueText: {
+        fontSize: 16,
+      },
+    });
     return (
       <TouchableOpacity onPress={() => this._goToUri(uri)}>
-        <Text style={{fontSize: 18, textDecorationLine: 'underline'}}>
-          {uri}
-        </Text>
+        <FlatList
+          nestedScrollEnabled
+          data={Object.entries(parseNFCData(uri))}
+          renderItem={renderItem}
+          keyExtractor={(item) => item[0]}
+        />
       </TouchableOpacity>
     );
   }
@@ -112,20 +161,20 @@ class RtdUriPayload extends React.Component {
 
 class WifiSimplePayload extends React.Component {
   render() {
-    let {ndef} = this.props;
+    let { ndef } = this.props;
     let credentials = Ndef.wifiSimple.decodePayload(ndef.payload);
     return (
-      <View style={{marginTop: 10}}>
-        <Text style={{marginBottom: 5}}>WIFI_SIMPLE</Text>
-        <View style={{flexDirection: 'row', marginBottom: 5}}>
-          <Text style={{color: 'grey', marginRight: 5}}>SSID:</Text>
-          <Text style={{fontSize: 16, flex: 1}}>
+      <View style={{ marginTop: 10 }}>
+        <Text style={{ marginBottom: 5 }}>WIFI_SIMPLE</Text>
+        <View style={{ flexDirection: 'row', marginBottom: 5 }}>
+          <Text style={{ color: 'grey', marginRight: 5 }}>SSID:</Text>
+          <Text style={{ fontSize: 16, flex: 1 }}>
             {credentials.ssid || '---'}
           </Text>
         </View>
-        <View style={{flexDirection: 'row', marginBottom: 5}}>
-          <Text style={{color: 'grey', marginRight: 5}}>Network Key:</Text>
-          <Text style={{fontSize: 16, flex: 1}}>
+        <View style={{ flexDirection: 'row', marginBottom: 5 }}>
+          <Text style={{ color: 'grey', marginRight: 5 }}>Network Key:</Text>
+          <Text style={{ fontSize: 16, flex: 1 }}>
             {credentials.networkKey || '---'}
           </Text>
         </View>
@@ -136,12 +185,12 @@ class WifiSimplePayload extends React.Component {
 
 class TextBasedMimePayload extends React.Component {
   render() {
-    let {ndef, mimeType} = this.props;
+    let { ndef, mimeType } = this.props;
     let text = Ndef.util.bytesToString(ndef.payload);
     return (
       <View>
-        <Text style={{fontSize: 16, color: 'gray'}}>{mimeType}</Text>
-        <Text style={{fontSize: 16}}>{text}</Text>
+        <Text style={{ fontSize: 16, color: 'gray' }}>{mimeType}</Text>
+        <Text style={{ fontSize: 16 }}>{text}</Text>
       </View>
     );
   }

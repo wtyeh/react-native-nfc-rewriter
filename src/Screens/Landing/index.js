@@ -70,7 +70,7 @@ function LandingScreen(props) {
 
       {isNfcSupported === false ? (
         <Text style={{fontSize: 24, padding: 20}}>
-          Your device doesn't support NFC
+          你的设备不支持NFC
         </Text>
       ) : (
         <ActivityIndicator size="large" style={{marginTop: 50}} />

@@ -65,3 +65,8 @@ buck-out/
 *.jsbundle.map
 *.android.bundle
 *.android.bundle.map
+
+# vscode
+.vscode/
+android/app/release
+*.jks

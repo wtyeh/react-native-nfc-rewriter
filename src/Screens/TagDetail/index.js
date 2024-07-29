@@ -21,7 +21,7 @@ function TagDetailScreen(props) {
       </View>
 
       <View style={styles.section}>
-        <Text style={styles.sectionLabel}>TECHNOLOGIES</Text>
+        <Text style={styles.sectionLabel}>标签技术</Text>
         <View style={styles.row}>
           {techs.map((tech) => (
             <Button
@@ -35,14 +35,14 @@ function TagDetailScreen(props) {
       </View>
 
       <View style={styles.section}>
-        <Text style={styles.sectionLabel}>NDEF</Text>
+        <Text style={styles.sectionLabel}>标签信息</Text>
         {ndef ? <NdefMessage ndef={ndef} /> : <Text>---</Text>}
       </View>
 
-      <View style={styles.section}>
+      {/* <View style={styles.section}>
         <Text style={styles.sectionLabel}>TAG OBJECT</Text>
         <Text>{JSON.stringify(tag, null, 2)}</Text>
-      </View>
+      </View> */}
     </ScrollView>
   );
 }

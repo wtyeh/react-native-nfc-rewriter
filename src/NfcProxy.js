@@ -21,7 +21,7 @@ const withAndroidPrompt = (fn) => {
       if (Platform.OS === 'android') {
         getOutlet('androidPrompt').update({
           visible: true,
-          message: 'Ready to scan NFC',
+          message: '准备扫描NFC标签',
         });
       }
 
@@ -30,7 +30,7 @@ const withAndroidPrompt = (fn) => {
       if (Platform.OS === 'android') {
         getOutlet('androidPrompt').update({
           visible: true,
-          message: 'Completed',
+          message: '完成',
         });
       }
 

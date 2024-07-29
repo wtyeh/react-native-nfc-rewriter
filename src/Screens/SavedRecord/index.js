@@ -46,7 +46,7 @@ function SavedRecordScreen(props) {
         },
       },
       {
-        text: 'CANCEL',
+        text: '取消',
         onPress: () => 0,
       },
     ]);
@@ -63,7 +63,7 @@ function SavedRecordScreen(props) {
         },
       },
       {
-        text: 'CANCEL',
+        text: '取消',
         onPress: () => 0,
       },
     ]);
